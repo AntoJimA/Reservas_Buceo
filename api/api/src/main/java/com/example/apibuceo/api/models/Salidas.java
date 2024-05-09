@@ -1,23 +1,25 @@
 package com.example.apibuceo.api.models;
 
+import java.sql.Date;
+
 public class Salidas {
-    private String fecha;
+    private Date fecha;
     private String hora;
     private int capacidad;
     private int plazasDisponibles;
 
-    public Salidas(String fecha, String hora, int capacidad, int plazasDisponibles) {
+    public Salidas(Date fecha, String hora, int capacidad, int plazasDisponibles) {
         this.fecha = fecha;
         this.hora = hora;
         this.capacidad = capacidad;
         this.plazasDisponibles = plazasDisponibles;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
