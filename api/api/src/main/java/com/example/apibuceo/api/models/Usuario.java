@@ -1,5 +1,6 @@
 package com.example.apibuceo.api.models;
 public class Usuario{
+    private int id;
     private String nombre;
     private String apellido;
     private String email;
@@ -42,5 +43,12 @@ public class Usuario{
 
     public void setNivelBuceo(String nivelBuceo) {
         this.nivelBuceo = nivelBuceo;
+    }
+
+    public int getId() {
+        return id;
+    }   
+    public void setId(int id) {
+        this.id = id;
     }
 }
