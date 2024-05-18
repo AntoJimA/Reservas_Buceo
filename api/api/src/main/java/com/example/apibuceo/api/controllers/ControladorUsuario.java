@@ -5,21 +5,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.apibuceo.api.models.Usuario;
 import com.example.apibuceo.api.repository.UserRepositoryImpl;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
 @RequestMapping("/usuarios")
 public class ControladorUsuario {
+    @GetMapping("/hola")
+
+    public String getMethodName() {
+        return "Hola mundo";
+    }
+    
 
     @Autowired
     private UserRepositoryImpl userRepositoryImpl;
-    @GetMapping("/save")
+    @PostMapping("/save")
     public ResponseEntity<String> save(Usuario usuario) {
         userRepositoryImpl.save(usuario);
         return ResponseEntity.ok("Usuario guardado");
@@ -36,6 +45,7 @@ public class ControladorUsuario {
     }
     @GetMapping("/findAll")
     public ResponseEntity<String> findAll() {
+        userRepositoryImpl.findAll();
         return ResponseEntity.ok("Usuarios encontrados");
     }
     @GetMapping("/findById/{id}")
