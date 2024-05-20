@@ -3,6 +3,7 @@ package com.example.apibuceo.api.models;
 import java.sql.Date;
 
 public class Salidas {
+    private int id;
     private Date fecha;
     private String hora;
     private int capacidad;
@@ -46,4 +47,12 @@ public class Salidas {
     public void setPlazasDisponibles(int plazasDisponibles) {
         this.plazasDisponibles = plazasDisponibles;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }   
 }
