@@ -9,6 +9,9 @@ public class Salidas {
     private int capacidad;
     private int plazasDisponibles;
 
+    public Salidas() {
+    }
+    
     public Salidas(Date fecha, String hora, int capacidad, int plazasDisponibles) {
         this.fecha = fecha;
         this.hora = hora;
