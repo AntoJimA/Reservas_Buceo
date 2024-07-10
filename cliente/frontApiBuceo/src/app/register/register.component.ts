@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+
+  opciones : string[] = ['Open Water','Advanced Open Water', 'Rescue Diver', 'Divemaster', 'Instructor'];
   user={
     nombre:'',
     apellido:'',
@@ -19,6 +21,10 @@ export class RegisterComponent {
   };
 
   register(){
+    if(this.user.nombre == '' || this.user.apellido == '' || this.user.email == '' || this.user.nivelbuceo == '' || this.user.username == '' || this.user.password == ''){
+      alert('Por favor, rellene todos los campos');
+      return;
+    }
     alert('Usuario registrado'+ this.user.nombre + ' ' + this.user.apellido + ' ' + this.user.email + ' ' + this.user.nivelbuceo + ' ' + this.user.username + ' ' + this.user.password);
     console.log(this.user);
   };

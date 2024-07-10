@@ -3,31 +3,31 @@
         <div>
         <h2>Registro</h2>
         </div>
-    <div>
-        <label for="nombre">nombre</label>
+    <div class="form_row">
+        <label for="nombre">Nombre</label>
         <input type="text" [(ngModel)]="user.nombre" id="nombre" name="nombre" required>
     </div>
-    <div>
-        <label for="apellido">apellido</label>
+    <div class="form_row">
+        <label for="apellido">Apellido</label>
         <input type="text" [(ngModel)]="user.apellido" id="apellido" name="apellido" required>
     </div>
-    <div>
-        <label for="email">email</label>
+    <div class="form_row">
+        <label for="email">e-mail</label>
         <input type="email" [(ngModel)]="user.email" id="email" name="email" required>
     </div>
-    <div>
-        <label for="nivelBuceo">nivelBuceo</label>
+    <div class="form_row">
+        <label for="nivelBuceo">Nivel de Buceo</label>
         <input type="text" [(ngModel)]="user.nivelbuceo" id="nivelBuceo" name="nivelBuceo" required>
     </div>
-    <div>
-        <label for="username">Username:</label>
+    <div class="form_row">
+        <label for="username">Nombre de usuario</label>
         <input type="text" [(ngModel)]="user.username" id="username" name="username" required>
     </div>
-    <div>
-        <label for="password">Password:</label>
+    <div class="form_row">
+        <label for="password">Contraseña</label>
         <input type="password" [(ngModel)]="user.password" id="password" name="password" required>
     </div>
-    <div>
+    <div class="form_row">
         <button type="submit" (click)="register()">Register</button>
     </div>
     </div>
