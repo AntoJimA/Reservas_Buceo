@@ -1,3 +1,7 @@
+<div class="volverButton">
+    <button (click)="goBack()">Volver a login</button>
+</div>
+
 <form (ngSubmit)="register()">
     <div class="registro">
         <div>
@@ -16,8 +20,10 @@
         <input type="email" [(ngModel)]="user.email" id="email" name="email" required>
     </div>
     <div class="form_row">
-        <label for="nivelBuceo">Nivel de Buceo</label>
-        <input type="text" [(ngModel)]="user.nivelbuceo" id="nivelBuceo" name="nivelBuceo" required>
+        <label for="nivelBuceo" (click)="toggleDropdown()">Nivel de Buceo</label>
+        <select [(ngModel)]="user.nivelbuceo" id="nivelBuceo" name="nivelBuceo"  required>
+            <option *ngFor="let nivel of opciones" [value]="nivel">{{nivel}}</option>
+        </select>
     </div>
     <div class="form_row">
         <label for="username">Nombre de usuario</label>
