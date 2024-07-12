@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.apibuceo.api.models.Salidas;
 import com.example.apibuceo.api.repository.SalidaRepositoryImpl;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/salidas")
+@RequiredArgsConstructor
 public class ContoladorSalidas {
     
     @Autowired

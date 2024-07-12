@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.apibuceo.api.models.Usuario;
 import com.example.apibuceo.api.repository.UserRepositoryImpl;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 
 @RestController
 @RequestMapping("/usuarios")
+@RequiredArgsConstructor
 public class ControladorUsuario {
     @GetMapping("/hola")
 
