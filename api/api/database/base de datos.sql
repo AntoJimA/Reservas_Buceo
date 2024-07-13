@@ -3,6 +3,8 @@ create database usuario;
 use usuario;
 create table Usuario(
 id int not null unique auto_increment,
+username varchar(255),
+password text, 
 nombre varchar(255),
 apellido varchar(255),
 email varchar(255),
