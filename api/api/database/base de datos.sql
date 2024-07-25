@@ -9,6 +9,7 @@ nombre varchar(255),
 apellido varchar(255),
 email varchar(255),
 nivelBuceo varchar(255),
+roll varchar(24),
 primary key(id)
 );
 
@@ -30,3 +31,4 @@ foreign key(id_usuario) references Usuario(id),
 foreign key(id_salida) references Salida(id) 
 );
 
+select * from usuario;

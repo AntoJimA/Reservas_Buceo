@@ -16,4 +16,5 @@ public class RegisterRequest {
     String apellido;
     String email;
     String nivelBuceo;
+    String role;
 }

@@ -16,15 +16,17 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
-
+        
         return ResponseEntity.ok(authService.login(loginRequest));
     }
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest) {
-            
+           // System.out.println("------------------------------------------------------------");
+            //System.out.println("Estamos en AuthController en el metodo register\n");
+            //System.out.println(registerRequest.getEmail());
             return ResponseEntity.ok(authService.register(registerRequest));
     }
     

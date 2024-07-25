@@ -7,5 +7,7 @@ public interface UserRepository {
     void delete(Usuario usuario);
     void update(Usuario usuario);
     void findAll();
-    void findById(int id);  
+    void findById(int id); 
+    void findByUsername(String username); 
+    void changePassword(String username, String Password,String newPassword);
 }

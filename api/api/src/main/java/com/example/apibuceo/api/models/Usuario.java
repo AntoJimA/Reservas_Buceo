@@ -18,13 +18,17 @@ public class Usuario implements UserDetails{
     @Enumerated
     private Role role;
 
-    public Usuario(String nombre, String apellido, String email, String nivelBuceo,String userName, String password)  {
+    public Usuario() {
+    }
+
+    public Usuario(String nombre, String apellido, String email, String nivelBuceo,String userName, String password, Role role)  {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.nivelBuceo = nivelBuceo;
         this.userName = userName;
         this.password = password;
+        this.role = role;
     }
 
     public String getUserName() {
@@ -78,6 +82,18 @@ public class Usuario implements UserDetails{
         this.id = id;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String toString() {
+        return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", nivelBuceo=" + nivelBuceo + ", role=" + role + "]";
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // TODO Auto-generated method stub
@@ -87,13 +103,13 @@ public class Usuario implements UserDetails{
     @Override
     public String getPassword() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
+        return password;
     }
 
     @Override
     public String getUsername() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
+        return userName;
     }
 
     @Override
@@ -118,5 +134,13 @@ public class Usuario implements UserDetails{
     public boolean isEnabled() {
         // TODO Auto-generated method stub
         return true;
+    }
+
+    public String getRoleString() {
+        return role.name();
+    }
+
+    public static Role getRoleFromString(String role) {
+        return Role.valueOf(role);
     }
 }
