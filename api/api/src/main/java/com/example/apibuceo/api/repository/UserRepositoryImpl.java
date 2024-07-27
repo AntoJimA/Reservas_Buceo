@@ -34,8 +34,8 @@ public class UserRepositoryImpl {
 
     public void update(Usuario usuario) {
         try{
-            String sql = "UPDATE usuarios SET nombre = ?, apellido = ?, email = ? WHERE id = ?, password = ?, username = ?, nivelBuceo = ?";
-            jdbcTemplate.update(sql, usuario.getNombre(), usuario.getApellido(), usuario.getEmail(), usuario.getId(), usuario.getPassword(), usuario.getUserName(), usuario.getNivelBuceo());
+            String sql = "UPDATE usuarios SET nombre = ?, apellido = ?, email = ? WHERE id = ?, password = ?, username = ?, nivelBuceo = ? where id = ?";
+            jdbcTemplate.update(sql, usuario.getNombre(), usuario.getApellido(), usuario.getEmail(), usuario.getId(), usuario.getPassword(), usuario.getUserName(), usuario.getNivelBuceo(), usuario.getId());
         }catch(Exception e){
             e.printStackTrace();
         }

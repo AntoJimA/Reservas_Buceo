@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,12 +76,17 @@ public class ControladorUsuario {
     public ResponseEntity<String> changePassword(@RequestParam String password, @RequestParam String newPassword) {
         org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        PasswordEncoder passwordEncoder = new BCryptPassworsEncoder();
-        String encoded = passwordEncoder.encode(password);
-        if(username.equals("admin")){
-            return ResponseEntity.status(Response.SC_FORBIDDEN).body("No puedes cambiar la contraseña del usuario admin");
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        Usuario usuario = userRepositoryImpl.findByUsername(username);
+        if(passwordEncoder.matches(password, usuario.getPassword())|| username.equals("admin")){// si el password es correcto o es el admin el que lo cambia se cambia la contraseña.
+            usuario.setPassword(passwordEncoder.encode(newPassword));
+            Usuario newUsuario = new Usuario(usuario.getNombre(), usuario.getApellido(), usuario.getEmail(), usuario.getNivelBuceo(), usuario.getUserName(), usuario.getPassword(), Role.valueOf(usuario.getRole().name()));
+            userRepositoryImpl.update(newUsuario);
+            return ResponseEntity.ok("Contraseña cambiada");
+        }else{
+            return ResponseEntity.status(Response.SC_UNAUTHORIZED).body("Contraseña incorrecta");
         }
-        return null;
+        
     }
 
 

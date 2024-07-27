@@ -25,7 +25,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest) {
            // System.out.println("------------------------------------------------------------");
-            //System.out.println("Estamos en AuthController en el metodo register\n");
+            System.out.println("Estamos en AuthController en el metodo register\n");
             //System.out.println(registerRequest.getEmail());
             return ResponseEntity.ok(authService.register(registerRequest));
     }
