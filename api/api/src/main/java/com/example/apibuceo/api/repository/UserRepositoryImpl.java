@@ -32,14 +32,23 @@ public class UserRepositoryImpl {
         }
     }   
 
-    public void update(Usuario usuario) {
-        try{
-            String sql = "UPDATE usuarios SET nombre = ?, apellido = ?, email = ? WHERE id = ?, password = ?, username = ?, nivelBuceo = ? where id = ?";
-            jdbcTemplate.update(sql, usuario.getNombre(), usuario.getApellido(), usuario.getEmail(), usuario.getId(), usuario.getPassword(), usuario.getUserName(), usuario.getNivelBuceo(), usuario.getId());
-        }catch(Exception e){
+    public void update(Usuario usuario, int id) {
+        System.out.println("Estamos en UserRepositoryImpl en el metodo update. id: "+ id);
+        try {
+            String sql = "UPDATE Usuario SET nombre = ?, apellido = ?, email = ?, password = ?, username = ?, nivelBuceo = ?, roll = ? WHERE id = ?";
+            System.out.println("Estamos en UserRepositoryImpl en el metodo update. roll: "+ usuario.getRole().toString());
+            System.out.println("Estamos en UserRepositoryImpl en el metodo update. nivelBuceo: "+ usuario.getNivelBuceo());
+            System.out.println("Estamos en UserRepositoryImpl en el metodo update. username: "+ usuario.getUserName());
+            System.out.println("Estamos en UserRepositoryImpl en el metodo update. password: "+ usuario.getPassword()); 
+            System.out.println("Estamos en UserRepositoryImpl en el metodo update. email: "+ usuario.getEmail());   
+            System.out.println("Estamos en UserRepositoryImpl en el metodo update. apellido: "+ usuario.getApellido());
+            System.out.println("Estamos en UserRepositoryImpl en el metodo update. nombre: "+ usuario.getNombre());
+            jdbcTemplate.update(sql, usuario.getNombre(), usuario.getApellido(), usuario.getEmail(), usuario.getPassword(), usuario.getUserName(), usuario.getNivelBuceo(),usuario.getRole().toString(), id);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
 
     public List<Usuario> findAll() {
         try{
@@ -89,4 +98,6 @@ public class UserRepositoryImpl {
             e.printStackTrace();
         }
     }
+
+
 }   

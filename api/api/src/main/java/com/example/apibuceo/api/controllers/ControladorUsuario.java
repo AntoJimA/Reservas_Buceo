@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.apibuceo.api.auth.PasswordChangeRequest;
 import com.example.apibuceo.api.models.Role;
 import com.example.apibuceo.api.models.Usuario;
 import com.example.apibuceo.api.repository.UserRepositoryImpl;
@@ -73,20 +76,22 @@ public class ControladorUsuario {
     }
 
     @PutMapping("/changePassword")
-    public ResponseEntity<String> changePassword(@RequestParam String password, @RequestParam String newPassword) {
+    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeRequest passwordChangeRequest) {
+        String password = passwordChangeRequest.getPassword();
+        String newPassword = passwordChangeRequest.getNewPassword();
         org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Usuario usuario = userRepositoryImpl.findByUsername(username);
         if(passwordEncoder.matches(password, usuario.getPassword())|| username.equals("admin")){// si el password es correcto o es el admin el que lo cambia se cambia la contraseña.
+            int id = usuario.getId();
             usuario.setPassword(passwordEncoder.encode(newPassword));
             Usuario newUsuario = new Usuario(usuario.getNombre(), usuario.getApellido(), usuario.getEmail(), usuario.getNivelBuceo(), usuario.getUserName(), usuario.getPassword(), Role.valueOf(usuario.getRole().name()));
-            userRepositoryImpl.update(newUsuario);
+            userRepositoryImpl.update(newUsuario,id);
             return ResponseEntity.ok("Contraseña cambiada");
         }else{
             return ResponseEntity.status(Response.SC_UNAUTHORIZED).body("Contraseña incorrecta");
         }
-        
     }
 
 
