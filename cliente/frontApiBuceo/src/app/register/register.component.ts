@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+/*import { RegistroService } from '../services/registro.service';*/
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [FormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
 
@@ -17,17 +18,19 @@ export class RegisterComponent {
     nombre:'',
     apellido:'',
     email:'',
-    nivelbuceo:'',
+    nivelBuceo:'',
     username:'',
-    password:''
+    password:'',
+    role:''
   };
-  constructor(private router: Router) {}
+  constructor(private router: Router,/*privateregistroService:RegistroService*/) {}
   register(){
-    if(this.user.nombre == '' || this.user.apellido == '' || this.user.email == '' || this.user.nivelbuceo == '' || this.user.username == '' || this.user.password == ''){
+    if(this.user.nombre === '' || this.user.apellido === '' || this.user.email === '' || this.user.nivelBuceo == '' || this.user.username === '' || this.user.password === '' || this.user.role === ''){
       alert('Por favor, rellene todos los campos');
       return;
     }
-    alert('Usuario registrado'+ this.user.nombre + ' ' + this.user.apellido + ' ' + this.user.email + ' ' + this.user.nivelbuceo + ' ' + this.user.username + ' ' + this.user.password);
+   /* this.registroService.registroUser(this.user).subscribe(result=>{console.log(result)});*/
+    alert('Usuario registrado'+ this.user.nombre + ' ' + this.user.apellido + ' ' + this.user.email + ' ' + this.user.nivelBuceo + ' ' + this.user.username + ' ' + this.user.password);
     console.log(this.user);
   };
 
@@ -35,7 +38,7 @@ export class RegisterComponent {
     this.dropdownVisible = !this.dropdownVisible;
   }
 
-  onSelectChange(event: any) {
+ onSelectChange(event: any) {
     console.log('Seleccionaste:', event.target.value);
     this.dropdownVisible = false; // Ocultar dropdown después de seleccionar
   }

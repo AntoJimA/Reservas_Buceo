@@ -21,7 +21,7 @@
     </div>
     <div class="form_row">
         <label for="nivelBuceo" (click)="toggleDropdown()">Nivel de Buceo</label>
-        <select [(ngModel)]="user.nivelbuceo" id="nivelBuceo" name="nivelBuceo"  required>
+        <select [(ngModel)]="user.nivelBuceo" id="nivelBuceo" name="nivelBuceo"  required>
             <option *ngFor="let nivel of opciones" [value]="nivel">{{nivel}}</option>
         </select>
     </div>
