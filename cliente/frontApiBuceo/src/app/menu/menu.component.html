@@ -1,1 +1,10 @@
-<p>menu works!</p>
+<h1>Menú</h1>
+<h2>Datos de perfil</h2>
+<div *ngIf="user">
+  <h3>Nombre: {{user.nombre}}</h3>
+  <p>Apellidos: {{user.apellido}}</p>
+  <p>Correo: {{user.email}}</p>
+  <p>Nivel de buceo: {{user.nivelBuceo}}</p>
+  <p>Username: {{user.username}}</p>
+  <p>Rol: {{user.role}}</p>
+</div>

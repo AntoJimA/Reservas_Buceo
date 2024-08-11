@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,15 +14,20 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private loginService:LoginService) {}
 
   onSubmit() {
     // Aquí puedes añadir la lógica de autenticación
-    if (this.username === 'user' && this.password === 'password') {
+    
+    this.loginService.login(this.username,this.password).subscribe(
+      (data)=>{this.router.navigate(['/menu']);},
+      (error)=>{alert('Invalid credentials');}
+    );
+   /* if (this.username === 'user' && this.password === 'password') {
       this.router.navigate(['/menu']);
     } else {
       alert('Invalid credentials');
-    }
+    }*/
   }
 
   goToRegister() {

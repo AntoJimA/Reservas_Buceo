@@ -70,11 +70,11 @@ public class ControladorUsuario {
     }
 
     @GetMapping("/mydata")
-    public ResponseEntity<String> mydata() {
+    public ResponseEntity<Usuario> mydata() {
         org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Usuario usuario = userRepositoryImpl.findByUsername(username);
-        return ResponseEntity.ok(usuario.toString());
+        return ResponseEntity.ok(usuario);
     }
 
     @PutMapping("/changePassword")
