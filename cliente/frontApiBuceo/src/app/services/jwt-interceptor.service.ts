@@ -1,27 +1,19 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { LoginService } from './login.service';
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class JwtInterceptorService implements HttpInterceptor {
+export const JwtInterceptor: HttpInterceptorFn = (req, next) => {
+  
+  const token = localStorage.getItem('token'); // O de donde obtengas el token
 
-  constructor(private loginService: LoginService) { }
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let token:String=this.loginService.getTokens();
-    if(token!=null){
-      req = req.clone(
-        {
-        setHeaders: {
-          'Content-Type': 'application/json;charset=utf-8',
-          'Accept' : 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+  if (token) {
+    const clonedReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
       }
-      );
+    });
+    return next(clonedReq);
   }
-  return next.handle(req);
-} 
-}
+
+  return next(req);
+};
+

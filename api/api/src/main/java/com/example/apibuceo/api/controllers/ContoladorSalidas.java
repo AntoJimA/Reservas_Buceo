@@ -1,14 +1,21 @@
 package com.example.apibuceo.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.apibuceo.api.models.Role;
 import com.example.apibuceo.api.models.Salidas;
+import com.example.apibuceo.api.models.Usuario;
 import com.example.apibuceo.api.repository.SalidaRepositoryImpl;
+import com.example.apibuceo.api.repository.UserRepositoryImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +37,10 @@ public class ContoladorSalidas {
     
     @Autowired
     SalidaRepositoryImpl salidaRepositoryImpl;
+
+    @Autowired
+    UserRepositoryImpl usuarioRepositoryImpl;
+
     @GetMapping("/hola")    
     public String helloSalidas() {
         return "Hola salidas";  
@@ -44,21 +55,40 @@ public class ContoladorSalidas {
     @PostMapping("/saveSalida")
     public ResponseEntity<String> crearSalida(@RequestBody Salidas salida) {
         //TODO: process POST request
-        salidaRepositoryImpl.crearSalida(salida);
-        return ResponseEntity.ok("Salida guardada");
+        if(esAdmin()){
+            salidaRepositoryImpl.crearSalida(salida);
+            return ResponseEntity.ok("Salida guardada");
+        }else{
+            return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+        }
     }
 
     @PutMapping("updateSalida/{id}")
     public ResponseEntity<String> modificarSalida(@PathVariable int id, @RequestBody Salidas salida) {
         //TODO: process PUT request
-        salidaRepositoryImpl.modificarSalida(id, salida);
-        return ResponseEntity.ok("Salida actualizada");
+        if(!esAdmin()){
+            return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+        }else{
+            salidaRepositoryImpl.modificarSalida(id, salida);
+            return ResponseEntity.ok("Salida modificada");
+        }       
     }
 
     @DeleteMapping("/deleteSalida/{id}")
     public ResponseEntity<String> eliminarSalida(@PathVariable int id) {
-        salidaRepositoryImpl.eliminarSalida(id);
-        return ResponseEntity.ok("Salida eliminada");
+        if(!esAdmin()){
+            return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+        }else{
+            salidaRepositoryImpl.eliminarSalida(id);
+            return ResponseEntity.ok("Salida eliminada");
+        }
+    }
+
+    private boolean esAdmin(){
+        org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Usuario usuario =usuarioRepositoryImpl.findByUsername(username);
+        return usuario.getRole().equals(Role.ADMIN);
     }
     
     

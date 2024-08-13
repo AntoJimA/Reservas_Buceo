@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from './User';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +13,15 @@ export class MenuService {
 
 
   getUsuario(): Observable<User> {
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + localStorage.getItem('token') // Asegúrate de que el token esté almacenado en localStorage
-    });
-    return this.http.get<User>('http://localhost:8080/usuarios/mydata', { headers });
+    return this.http.get<User>('http://localhost:8080/usuarios/mydata').pipe(catchError(this.handleError));
   }
+  private handleError(error:HttpErrorResponse):Observable<never>{ {
+    if(error.status ===0){
+      console.error('An error occurred:', error.error);
+    }else{
+      console.error(`Backend returned code ${error.status}, body was: ${error.error}`);
+    }
+    return throwError('Something bad happened; please try again later.');
+  }}
 }
+

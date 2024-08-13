@@ -74,6 +74,7 @@ public class ControladorUsuario {
         org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Usuario usuario = userRepositoryImpl.findByUsername(username);
+        System.out.println(usuario.toString());
         return ResponseEntity.ok(usuario);
     }
 

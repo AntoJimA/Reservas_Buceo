@@ -30,6 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         // TODO Auto-generated method stub
             System.out.println("Estamos en JwtAuthenticationFilter en el metodo doFilterInternal");
+            System.out.println("Request: "+request);
             final String token= getTokenFromRequest(request);
             final String username;
 

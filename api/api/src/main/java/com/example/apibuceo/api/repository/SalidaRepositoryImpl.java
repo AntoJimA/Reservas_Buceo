@@ -35,7 +35,7 @@ public class SalidaRepositoryImpl implements SalidaRepository {
     public void crearSalida(Salidas salida) {
         // Implementation code here
         try {
-            String query = "INSERT INTO salidas (fecha, hora, capacidad, plazasDisponibles) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO salida (fecha, hora, capacidad, plazasDisponibles) VALUES (?, ?, ?, ?)";
             jdbcTemplate.update(query, salida.getFecha(), salida.getHora(), salida.getCapacidad(), salida.getPlazasDisponibles());
         } catch (Exception e) {
             // Implementation code here
@@ -47,7 +47,7 @@ public class SalidaRepositoryImpl implements SalidaRepository {
     public void modificarSalida(int id,Salidas salida) {
         // Implementation code here
         try {
-            String query = "UPDATE salidas SET fecha = ?, hora = ?, capacidad = ?, plazasDisponibles = ? WHERE id = ?";
+            String query = "UPDATE salida SET fecha = ?, hora = ?, capacidad = ?, plazasDisponibles = ? WHERE id = ?";
             jdbcTemplate.update(query, salida.getFecha(), salida.getHora(), salida.getCapacidad(), salida.getPlazasDisponibles(), id);
         } catch (Exception e) {
             // Implementation code here
@@ -59,7 +59,7 @@ public class SalidaRepositoryImpl implements SalidaRepository {
     public void eliminarSalida(int id) {
         // Implementation code here
         try {
-            String query = "DELETE FROM salidas WHERE id = ?";
+            String query = "DELETE FROM salida WHERE id = ?";
             jdbcTemplate.update(query, id);
         } catch (Exception e) {
             // Implementation code here

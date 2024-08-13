@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .profile-data {
+    flex: 1;
+  }
+  
+  .box {
+    width: 400px; /* Ajusta el ancho según sea necesario */
+    border: 1px solid #000; /* Borde del recuadro */
+    padding: 10px; /* Espaciado interno */
+    margin-left: 600px; /* Espaciado entre los datos y el recuadro */
+  }
