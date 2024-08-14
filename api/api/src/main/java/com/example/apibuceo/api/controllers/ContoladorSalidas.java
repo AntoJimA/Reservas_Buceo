@@ -1,5 +1,7 @@
 package com.example.apibuceo.api.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
@@ -47,9 +49,9 @@ public class ContoladorSalidas {
     }
 
     @GetMapping("/getSalidas")
-    public ResponseEntity<String> getSalidas() {
-       salidaRepositoryImpl.listarSalidas();
-       return ResponseEntity.ok("Salidas encontradas");
+    public ResponseEntity<List<Salidas>> getSalidas() {
+       List<Salidas>salidas=salidaRepositoryImpl.listarSalidas();
+       return ResponseEntity.ok(salidas);
     }
 
     @PostMapping("/saveSalida")
@@ -69,6 +71,9 @@ public class ContoladorSalidas {
         if(!esAdmin()){
             return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
         }else{
+            if(!salidaRepositoryImpl.existeSalida(id)){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             salidaRepositoryImpl.modificarSalida(id, salida);
             return ResponseEntity.ok("Salida modificada");
         }       
@@ -83,6 +88,22 @@ public class ContoladorSalidas {
             return ResponseEntity.ok("Salida eliminada");
         }
     }
+
+    @PostMapping("/apuntarseSalida/{id}")
+    public ResponseEntity<String> apuntarseSalida(@RequestBody String entity) {
+        //TODO: process POST request
+        
+        return null;
+    }
+
+    @PostMapping("/desapuntarseSalida/{id}")
+    public ResponseEntity<String> desapuntarseSalida(@RequestBody String entity) {
+        return null;
+    }
+    
+
+
+
 
     private boolean esAdmin(){
         org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
