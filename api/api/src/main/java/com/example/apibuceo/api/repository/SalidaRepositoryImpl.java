@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.apibuceo.api.models.Reservas;
 import com.example.apibuceo.api.models.Salidas;
 import com.example.apibuceo.api.models.Usuario;
 @Repository
@@ -86,7 +87,7 @@ public class SalidaRepositoryImpl implements SalidaRepository {
 
     public void apuntarseSalida(int idUsuariomint,int idSalida){
         try{
-            String sql = "INSERT INTO Reservas (id_usuario, id_salida) VALUES (?, ?)";
+            String sql = "INSERT INTO Reserva (id_usuario, id_salida) VALUES (?, ?)";
             jdbcTemplate.update(sql, idUsuariomint, idSalida);
         }
         catch(Exception e){
@@ -103,5 +104,21 @@ public class SalidaRepositoryImpl implements SalidaRepository {
             e.printStackTrace();
         }
     }
+
+    public List<Reservas> listarSalidasUsuario(int idUsuario,int idSalida){
+        try{
+            String sql = "SELECT id_salida FROM Reserva WHERE id_usuario = ?";
+            List<Reservas>listaSalidas=jdbcTemplate.query(sql, new Object[]{idUsuario}, (rs, rowNum) -> new Reservas(rs.getInt("id_usuario"), rs.getInt("id_salida")));
+            return listaSalidas;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        
+    }
+
+    
+    
 
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.apibuceo.api.Requests.ApuntarseRequest;
+import com.example.apibuceo.api.models.Reservas;
 import com.example.apibuceo.api.models.Role;
 import com.example.apibuceo.api.models.Salidas;
 import com.example.apibuceo.api.models.Usuario;
@@ -90,20 +92,19 @@ public class ContoladorSalidas {
     }
 
     @PostMapping("/apuntarseSalida/{id}")
-    public ResponseEntity<String> apuntarseSalida(@RequestBody String entity) {
+    public ResponseEntity<String> apuntarseSalida(@RequestBody ApuntarseRequest apuntarseRequest, @PathVariable int id) {
         //TODO: process POST request
-        
-        return null;
+        int idUsuario=apuntarseRequest.getIdUsuario();
+        salidaRepositoryImpl.apuntarseSalida(idUsuario, id);
+        return ResponseEntity.ok("Usuario apuntado a la salida");
     }
 
-    @PostMapping("/desapuntarseSalida/{id}")
-    public ResponseEntity<String> desapuntarseSalida(@RequestBody String entity) {
-        return null;
+    @PutMapping("/desapuntarseSalida/{id}")
+    public ResponseEntity<String> desapuntarseSalida(@RequestBody ApuntarseRequest desaApuntarseRequest, @PathVariable int id) {
+        int idUsuario=desaApuntarseRequest.getIdUsuario();
+        salidaRepositoryImpl.desapuntarseSalida(idUsuario,id);
+        return ResponseEntity.ok("Usuario desapuntado de la salida");
     }
-    
-
-
-
 
     private boolean esAdmin(){
         org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -111,7 +112,14 @@ public class ContoladorSalidas {
         Usuario usuario =usuarioRepositoryImpl.findByUsername(username);
         return usuario.getRole().equals(Role.ADMIN);
     }
-    
-    
+
+    private boolean estaApuntado(int idUsuario, int idSalida){
+        List<Reservas> reservas=salidaRepositoryImpl.listarSalidasUsuario(idUsuario,idSalida);
+        if(reservas.size()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }
