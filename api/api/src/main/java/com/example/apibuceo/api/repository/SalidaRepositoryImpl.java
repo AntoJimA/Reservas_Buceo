@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.example.apibuceo.api.models.Reservas;
@@ -87,6 +88,9 @@ public class SalidaRepositoryImpl implements SalidaRepository {
 
     public void apuntarseSalida(int idUsuariomint,int idSalida){
         try{
+            int plazasDisponibles=plazasDisponibles(idSalida);
+            plazasDisponibles--;
+            modificarPlazasDisponibles(idSalida, plazasDisponibles);
             String sql = "INSERT INTO Reserva (id_usuario, id_salida) VALUES (?, ?)";
             jdbcTemplate.update(sql, idUsuariomint, idSalida);
         }
@@ -98,6 +102,9 @@ public class SalidaRepositoryImpl implements SalidaRepository {
     public void desapuntarseSalida(int idUsuariomint,int idSalida){
         try{
             String sql = "DELETE FROM Reservas WHERE id_usuario = ? AND id_salida = ?";
+            int plazasDisponibles=plazasDisponibles(idSalida);
+            plazasDisponibles++;
+            modificarPlazasDisponibles(idSalida, plazasDisponibles);
             jdbcTemplate.update(sql, idUsuariomint, idSalida);
         }
         catch(Exception e){
@@ -118,7 +125,50 @@ public class SalidaRepositoryImpl implements SalidaRepository {
         
     }
 
-    
-    
+    public int plazasDisponibles(int idSalida){
+        try{
+            String sql = "SELECT plazasDisponiles FROM salida WHERE id = ?";
+            int plazasDisponibles=jdbcTemplate.queryForObject(sql, new Object[]{idSalida}, Integer.class);
+            return plazasDisponibles;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    private void modificarPlazasDisponibles(int idSalida,int plazasDisponibles){
+        try{
+            String sql = "UPDATE salida SET plazasDisponiles = ? WHERE id = ?";
+            jdbcTemplate.update(sql, plazasDisponibles, idSalida);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public List<Usuario> verUsuariosApuntados(int idSalida) {
+        String sql = "SELECT * FROM Usuario WHERE id IN (SELECT id_usuario FROM Reserva WHERE id_salida = ?)";
+
+        try {
+            List<Usuario> listaUsuarios = jdbcTemplate.query(sql, new Object[]{idSalida}, usuarioRowMapper());
+            return listaUsuarios;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private RowMapper<Usuario> usuarioRowMapper() {
+        return (rs, rowNum) -> new Usuario(
+            rs.getString("nombre"),
+            rs.getString("apellido"),
+            rs.getString("email"),
+            rs.getString("password"),
+            rs.getString("username"),
+            rs.getString("nivelBuceo"),
+            Usuario.getRoleFromString(rs.getString("roll"))
+        );
+    }
 
 }

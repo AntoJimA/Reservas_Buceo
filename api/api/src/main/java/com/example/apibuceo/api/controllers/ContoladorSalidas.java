@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -95,6 +97,12 @@ public class ContoladorSalidas {
     public ResponseEntity<String> apuntarseSalida(@RequestBody ApuntarseRequest apuntarseRequest, @PathVariable int id) {
         //TODO: process POST request
         int idUsuario=apuntarseRequest.getIdUsuario();
+        if(estaApuntado(idUsuario, id)){
+            return ResponseEntity.ok("El usuario ya esta apuntado a la salida");
+        }
+        if(salidaRepositoryImpl.plazasDisponibles(id)==0){
+            return ResponseEntity.ok("No hay plazas disponibles");
+        }
         salidaRepositoryImpl.apuntarseSalida(idUsuario, id);
         return ResponseEntity.ok("Usuario apuntado a la salida");
     }
@@ -102,6 +110,9 @@ public class ContoladorSalidas {
     @PutMapping("/desapuntarseSalida/{id}")
     public ResponseEntity<String> desapuntarseSalida(@RequestBody ApuntarseRequest desaApuntarseRequest, @PathVariable int id) {
         int idUsuario=desaApuntarseRequest.getIdUsuario();
+        if(!estaApuntado(idUsuario, id)){
+            return ResponseEntity.ok("El usuario no esta apuntado a la salida");
+        }
         salidaRepositoryImpl.desapuntarseSalida(idUsuario,id);
         return ResponseEntity.ok("Usuario desapuntado de la salida");
     }
@@ -122,4 +133,9 @@ public class ContoladorSalidas {
         }
     }
 
+    @GetMapping("/verUsuariosApuntados/{id}")
+    public List<Usuario> verUsuariosApuntados(@PathVariable int id) {
+        return salidaRepositoryImpl.verUsuariosApuntados(id);
+    }
+    
 }

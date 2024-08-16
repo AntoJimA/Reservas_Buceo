@@ -31,4 +31,6 @@ foreign key(id_usuario) references Usuario(id),
 foreign key(id_salida) references Salida(id) 
 );
 
-select * from usuario;
+select * from Salida;
+select * from Usuario;
+select * from Reserva;

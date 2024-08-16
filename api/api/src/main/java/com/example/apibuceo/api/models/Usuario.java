@@ -31,6 +31,17 @@ public class Usuario implements UserDetails{
         this.role = role;
     }
 
+    public Usuario(int id, String nombre, String apellido, String email, String nivelBuceo,String userName, String password, Role role)  {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.nivelBuceo = nivelBuceo;
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
+    }
+
     public String getUserName() {
         return userName;
     }
