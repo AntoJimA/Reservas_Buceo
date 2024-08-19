@@ -32,6 +32,10 @@ public class AuthService {
     public AuthResponse register(RegisterRequest registerRequest) {
        // System.out.println("Estamos en AuthService en el metodo register");
         //System.out.println(registerRequest);
+        Usuario aux = userRepositoryImpl.findByUsername(registerRequest.getUsername());
+        if(aux != null) {
+            return AuthResponse.builder().token("Usuario ya existe").build();
+        }
         Usuario usuario = new Usuario(registerRequest.getNombre(),registerRequest.getApellido(), registerRequest.getEmail(), registerRequest.getNivelBuceo(), registerRequest.getUsername(), passwordEncoder.encode(registerRequest.getPassword()), Usuario.getRoleFromString(registerRequest.getRole()));
         userRepositoryImpl.save(usuario);
         return AuthResponse.builder().token(jwtService.getToken(usuario)).build();

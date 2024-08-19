@@ -39,8 +39,6 @@ public class ControladorUsuario {
         return "Hola mundo";
     }
 
-    
-
     @Autowired
     private UserRepositoryImpl userRepositoryImpl;
     @PostMapping("/save")
