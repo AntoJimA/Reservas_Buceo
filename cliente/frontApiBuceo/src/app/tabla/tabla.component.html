@@ -1,4 +1,4 @@
-<table>
+<table class="tabla">
     <thead>
       <tr>
         <th>id</th>
@@ -9,12 +9,21 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let activity of activities">
-        <td>{{ salidas.id }}</td>
-        <td>{{ salidas.fecha }}</td>
-        <td>{{ salidas.hora }}</td>
-        <td>{{ salidas.capacidad }}</td>
-        <td>{{ salidas.plazasDisponiles }}</td>
+      <tr *ngFor="let activity of activity">
+        <td>{{ activity.id }}</td>
+        <td>{{ activity.fecha }}</td>
+        <td>{{ activity.hora }}</td>
+        <td>{{ activity.capacidad }}</td>
+        <td>{{ activity.plazasDisponiles }}</td>
+        <td>
+          <button (click)="apuntarse(activity.id)">apuntarse</button>
+        </td>
+        <td>
+          <button (click)="desapuntarse(activity.id)">desapuntarse</button>
+        </td>
+        <td>
+          <button (click)="deleteActivity(activity.id)">eliminar</button>
+        </td>
       </tr>
     </tbody>
   </table>

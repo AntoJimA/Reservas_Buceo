@@ -11,6 +11,7 @@ import { MenuService } from './app/services/menu.service';
 import { LoginService } from './app/services/login.service';
 import { JwtInterceptor } from './app/services/jwt-interceptor.service';
 import { ErrorInterceptor } from './app/services/error-interceptor.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -19,8 +20,9 @@ bootstrapApplication(AppComponent, {
     RegistroService, // Proveedor del servicio
     provideHttpClient(
       withInterceptors([JwtInterceptor, ErrorInterceptor]) // Asegúrate de importar ErrorInterceptor
+      
     ),
-    
+    ReactiveFormsModule,
     MenuService,
     LoginService
   ],

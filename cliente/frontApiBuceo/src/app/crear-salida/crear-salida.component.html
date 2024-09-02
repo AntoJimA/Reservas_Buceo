@@ -1,0 +1,13 @@
+<form [formGroup]="salidaForm" >
+    <label for="fecha">Fecha</label>
+    <input id="fecha" type="date" formControlName="fecha" required>
+    
+    <label for="hora">Hora</label>
+    <input id="hora" type="time" formControlName="hora" required>
+    
+    <label for="capacidad">Capacidad</label>
+    <input id="capacidad" type="number" formControlName="capacidad" required>
+    
+    <button type="submit">Crear Salida</button>
+  </form>
+

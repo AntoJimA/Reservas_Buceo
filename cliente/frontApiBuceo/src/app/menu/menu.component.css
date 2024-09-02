@@ -14,3 +14,10 @@
     padding: 10px; /* Espaciado interno */
     margin-left: 600px; /* Espaciado entre los datos y el recuadro */
   }
+  .creator{
+    width: 60%; /* Ajusta el ancho según sea necesario */
+    height: 60%; /* Ajusta el alto según sea necesario */
+    border: 1px solid #000; /* Borde del recuadro */
+    padding: 10px; /* Espaciado interno */
+    margin-left: 600px; /* Espaciado entre los datos y el recuadro */
+  }
