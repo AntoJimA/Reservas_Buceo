@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { SalidaService } from '../services/salida.service'; 
 import { Salida } from '../services/Salida';
 import { CommonModule } from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import { Apuntarse } from '../services/apuntarse';
 
 @Component({
   selector: 'app-tabla',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './tabla.component.html',
   styleUrl: './tabla.component.css'
 })
@@ -24,7 +26,8 @@ export class TablaComponent {
   }
 
   apuntarse(id:number){
-    this.salidaService.apuntarse(id).subscribe();
+    const apuntarse: Apuntarse = {idUsuario: id};
+    this.salidaService.apuntarse(id,apuntarse).subscribe();
     this.activity = this.activity.filter((activity)=>activity.id != id);
   }
 
@@ -43,4 +46,9 @@ export class TablaComponent {
     this.activity = this.activity.filter((activity)=>activity.id != salida.id);
     this.activity.push(salida);
   }
+
+  static reloadPage(){
+    window.location.reload();
+  }
+
 }

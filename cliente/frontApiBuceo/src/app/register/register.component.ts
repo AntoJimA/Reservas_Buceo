@@ -17,7 +17,7 @@ export class RegisterComponent {
   opciones: string[] = ['Open Water', 'Advanced Open Water', 'Rescue Diver', 'Divemaster', 'Instructor'];
   dropdownVisible = false;
 
- user:User = new User('','','','','','','');
+ user:User = new User(0,'','','','','','','');
   constructor(private router: Router, private registroService: RegistroService) {}
 
   register() {

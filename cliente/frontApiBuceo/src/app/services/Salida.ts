@@ -10,6 +10,6 @@ export class Salida{
         this.fecha=fecha;
         this.hora=hora;
         this.capacidad=capacidad;
-        this.plazasDisponiles=plazasDisponiles;
+        this.plazasDisponiles=capacidad;
     }
 }

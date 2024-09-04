@@ -24,7 +24,7 @@ public class SalidaRepositoryImpl implements SalidaRepository {
         try {
             // Implementation code here
             String query = "SELECT * FROM Salida";
-            List<Salidas> listaSalidas = jdbcTemplate.query(query, (rs, rowNum) -> new Salidas(rs.getDate("fecha"), rs.getString("hora"), rs.getInt("capacidad"), rs.getInt("plazasDisponiles")));
+            List<Salidas> listaSalidas = jdbcTemplate.query(query, (rs, rowNum) -> new Salidas(rs.getInt("id"),rs.getDate("fecha"), rs.getString("hora"), rs.getInt("capacidad"), rs.getInt("plazasDisponiles")));
             return listaSalidas;
         } catch (Exception e) {
             // Implementation code here

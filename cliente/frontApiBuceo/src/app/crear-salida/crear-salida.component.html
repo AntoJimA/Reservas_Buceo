@@ -1,4 +1,4 @@
-<form [formGroup]="salidaForm" >
+<form [formGroup]="salidaForm" (ngSubmit)="onSubmit()" >
     <label for="fecha">Fecha</label>
     <input id="fecha" type="date" formControlName="fecha" required>
     

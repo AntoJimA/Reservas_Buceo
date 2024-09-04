@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Salida } from './Salida';
+import {Apuntarse} from './apuntarse';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,9 @@ export class SalidaService {
     return this.http.delete('http://localhost:8080/salidas/deleteSalida/'+id);
   }
 
-  apuntarse(id:number){
-    return this.http.put('http://localhost:8080/salidas/apuntarseSalida/{id}'+id,null);
+  apuntarse(id:number,apuntarse:Apuntarse){
+
+    return this.http.post('http://localhost:8080/salidas/apuntarseSalida/'+id,apuntarse);
   }
 
   desapuntarse(id:number){
@@ -26,6 +28,7 @@ export class SalidaService {
   }
 
   createSalida(salida:Salida){
+
     return this.http.post('http://localhost:8080/salidas/saveSalida',salida);
   }
 

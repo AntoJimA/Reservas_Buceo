@@ -16,7 +16,14 @@ public class Salidas {
         this.fecha = fecha;
         this.hora = hora;
         this.capacidad = capacidad;
-        this.plazasDisponibles = plazasDisponibles;
+        this.plazasDisponibles = capacidad;
+    }
+
+    public Salidas(int id,Date fecha, String hora, int capacidad, int plazasDisponibles) {
+        this.fecha = fecha;
+        this.hora = hora;
+        this.capacidad = capacidad;
+        this.plazasDisponibles = capacidad;
     }
 
     public Date getFecha() {
